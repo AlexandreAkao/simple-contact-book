@@ -34,31 +34,43 @@ class Login {
 
     if (!validator.isEmail(this.body.email)) this.errors.push('E-mail invalido');
 
-    if (this.body.password < 3 || this.body.password > 50) {
+    if (this.body.password.length < 3 || this.body.password.length > 50) {
       this.errors.push('A senha precisa ter entre 3 e 50 caracteres');
     }
   }
 
   async userExists() {
-    const user = await LoginModel.findOne({ email: this.body.email });
+    this.user = await LoginModel.findOne({ email: this.body.email });
 
-    if (user) this.errors.push('Usuario já existe');
+    if (this.user) this.errors.push('Usuario já existe');
   }
 
   async register() {
     this.valida();
-    try {
-      await this.userExists();
+    await this.userExists();
 
-      if (this.errors.length > 0) return;
+    if (this.errors.length > 0) return;
 
-      const salt = bcryptjs.genSaltSync();
-      this.body.password = bcryptjs.hashSync(this.body.password, salt);
-      this.user = await LoginModel.create(this.body);
-    } catch (error) {
-      console.log(error);      
+    const salt = bcryptjs.genSaltSync();
+    this.body.password = bcryptjs.hashSync(this.body.password, salt);
+    this.user = await LoginModel.create(this.body);
+  }
+
+  async login() {
+    this.valida();
+
+    if (this.errors.length > 0) return;
+
+    this.user = await LoginModel.findOne({ email: this.body.email });
+
+    if (!this.user) {
+      return this.errors.push('Usuário ou senha inválida.');
     }
 
+    if (!bcryptjs.compareSync(this.body.password, this.user.password)) {
+      this.errors.push('Usuário ou senha inválida.');
+      this.user = null;
+    }
   }
 }
 
