@@ -22,6 +22,15 @@ Contato.findById = async function(id) {
   return await ContatoModel.findById(id);
 }
 
+Contato.findMany = async function() {
+  return await ContatoModel.find().sort({ criadoEm: -1 });
+}
+
+Contato.delete = async function(id) {
+  if(typeof id !== 'string') return;
+  return await ContatoModel.findOneAndDelete({ _id: id });
+};
+
 Contato.prototype.register = async function() {
   this.valida();
 

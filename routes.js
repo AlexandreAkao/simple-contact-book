@@ -1,4 +1,5 @@
 const express = require('express');
+
 const homeController = require('./src/controllers/homeController');
 const loginController = require('./src/controllers/loginController');
 const contatoController = require('./src/controllers/contatoController');
@@ -16,6 +17,7 @@ route.get('/login/logout', loginController.logout);
 route.get('/contatos', loginRequired, contatoController.index);
 route.get('/contatos/:id', loginRequired, contatoController.show);
 route.post('/contatos/edit/:id', loginRequired, contatoController.edit);
+route.get('/contatos/delete/:id', loginRequired, contatoController.delete);
 route.post('/contatos/register', loginRequired, contatoController.register);
 
 module.exports = route;
