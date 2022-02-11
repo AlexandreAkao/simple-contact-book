@@ -6,50 +6,50 @@
     <div class="col-lg-2"></div>
 
     <div class="col-lg-8 my-3">
-      <h1 class="display-1 text-center">Criar conta ou Entrar</h1>
-      <p class="text-center lead">Faça login ou crie sua conta abaixo</p>
+      <h1 class="display-1 text-center">Create Account or Login</h1>
+      <p class="text-center lead">Login or create your account below</p>
 
       <%- include('includes/messages') %>
 
       <div class="row">
         <div class="col-lg">
-          <h4>Faça seu cadastro</h4>
-          <p>Se você ainda não tem conta, preencha o formulario abaixo:</p>
+          <h4>Make your registration</h4>
+          <p>If you don't have an account, fill in the form below:</p>
           
           <form action="/login/register" method="POST">
             <input type="hidden" name="_csrf" value=<%= csrfToken %>>
             <div class="mb-3">
-              <label class="form-label">Seu email</label>
+              <label class="form-label">Your email</label>
               <input type="email" class="form-control" name="email">
             </div>
             
             <div class="mb-3">
-              <label class="form-label">Sua senha</label>
+              <label class="form-label">Your password</label>
               <input type="password" class="form-control" name="password">
             </div>
 
-            <button type="submit" class="btn btn-primary">Criar minha conta</button>
+            <button type="submit" class="btn btn-primary">Create my account</button>
           </form>
         </div>
 
         <div class="col-lg">
-          <h4>Faça seu login</h4>
+          <h4>Login</h4>
 
-          <p>Se você já tem uma conta, faça login abaixo:</p>
+          <p>If you already have an account, login below:</p>
           
           <form action="/login/login" method="POST">
             <input type="hidden" name="_csrf" value=<%= csrfToken %>>
             <div class="mb-3">
-              <label class="form-label">Seu email</label>
+              <label class="form-label">Your email</label>
               <input type="email" class="form-control" name="email">
             </div>
             
             <div class="mb-3">
-              <label class="form-label">Sua senha</label>
+              <label class="form-label">Your password</label>
               <input type="password" class="form-control" name="password">
             </div>
 
-            <button type="submit" class="btn btn-primary">Entar</button>
+            <button type="submit" class="btn btn-primary">Log in</button>
           </form>
         </div>
       </div>

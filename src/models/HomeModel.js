@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const HomeSchema = new mongoose.Schema({
-  titulo: { type: String, required: true },
-  descricao: String
+  title: { type: String, required: true },
+  description: String
 });
 
 const HomeModel = mongoose.model('Home', HomeSchema);

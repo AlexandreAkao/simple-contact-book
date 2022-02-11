@@ -23,30 +23,34 @@ class Login {
       }
     }
 
-    this.body = {
-      email: this.body.email,
-      password: this.body.password
-    }
+    const { email, password } = this.body;
+
+    this.body = { email, password };
   }
 
   valida() {
     this.cleanUp();
 
-    if (!validator.isEmail(this.body.email)) this.errors.push('E-mail invalido');
+    const { email, password } = this.body;
 
-    if (this.body.password.length < 3 || this.body.password.length > 50) {
-      this.errors.push('A senha precisa ter entre 3 e 50 caracteres');
+    if (!validator.isEmail(email)) this.errors.push('Invalid email');
+
+    if (password.length < 3 || password.length > 50) {
+      this.errors.push('Password must be between 3 and 50 characters.');
     }
   }
 
   async userExists() {
-    this.user = await LoginModel.findOne({ email: this.body.email });
+    const { email } = this.body;
 
-    if (this.user) this.errors.push('Usuario já existe');
+    this.user = await LoginModel.findOne({ email });
+
+    if (this.user) this.errors.push('User already exists.');
   }
 
   async register() {
     this.valida();
+
     await this.userExists();
 
     if (this.errors.length > 0) return;
@@ -59,16 +63,18 @@ class Login {
   async login() {
     this.valida();
 
+    const { email, password } = this.body;
+
     if (this.errors.length > 0) return;
 
-    this.user = await LoginModel.findOne({ email: this.body.email });
+    this.user = await LoginModel.findOne({ email });
 
     if (!this.user) {
-      return this.errors.push('Usuário ou senha inválida.');
+      return this.errors.push('Invalid username or password.');
     }
 
-    if (!bcryptjs.compareSync(this.body.password, this.user.password)) {
-      this.errors.push('Usuário ou senha inválida.');
+    if (!bcryptjs.compareSync(password, this.user.password)) {
+      this.errors.push('Invalid username or password.');
       this.user = null;
     }
   }
