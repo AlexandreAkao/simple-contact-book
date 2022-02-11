@@ -22,11 +22,30 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.edit = async (req, res) => {
+exports.show = async (req, res) => {
   if (!req.params.id) return res.render('404');
   const contato = await Contato.findById(req.params.id);
-  
+
   if (!contato) return res.render('404');
 
-  return res.render('contato', { contato })
+  return res.render('contato', { contato });
+};
+
+exports.edit = async (req, res) => {
+  try {
+    if (!req.params.id) return res.render('404');
+    const contato = new Contato(req.body);
+    await contato.edit(req.params.id);
+  
+    if (contato.errors.length > 0) {
+      req.flash('errors', contato.errors);
+      return req.session.save(() => res.redirect(`/contatos/${req.params.id}`));
+    }
+
+    req.flash('success', 'Contato registrado com sucesso.');
+    return req.session.save(() => res.redirect(`/contatos/${contato.contato._id}`));
+  } catch (error) {
+    console.log(error);
+    return res.render('404');
+  }
 };
