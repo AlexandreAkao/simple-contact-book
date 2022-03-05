@@ -1,7 +1,7 @@
 
 # Contact Book
 
-A basic project, using ESJ as the templating language. As part of [Luiz Otávio Miranda's course](https://www.udemy.com/course/curso-de-javascript-moderno-do-basico-ao-avancado/) project, a contact book was developed using the following technologies
+A basic project, using ESJ as the templating language. As part of [Luiz Otávio Miranda's course](https://www.udemy.com/course/curso-de-javascript-moderno-do-basico-ao-avancado/) project with some personal modifications, a contact book was developed using the following technologies
 
 - Node.js
 - EJS
